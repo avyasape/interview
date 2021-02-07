@@ -1,0 +1,56 @@
+Say prices[i] is stock price on day i, k -> max number of transactions then we can denote Max Profit T as follows 
+T[i][k][0] -> max profit on day i with k transactions and we end up with 0 stocks on that day after all transactions. 
+              which means on this day we can either hold or sell
+T[i][k][1] -> max profit on day i with k transactions and we end up with 1 stock on that day after all transactions. 
+              which means on this day we can either hold or buy
+
+we account for transaction or fees only on day we buy (since transaction/fees apply to pair of buy sell, we can chose it on either buy or sell)
+When we buy, we substract the price (since we'll add it when we sell)
+When we sell, we add price (since we subtracted the buy price already)
+
+the recurrence relation is 
+T[i][k][0] = max(T[i-1][k][0], T[i-1][k][1] + prices[i])
+T[i][k][1] = max(T[i-1][k][1], T[i-1][k-1][0] - prices[i] - fee)
+
+base cases are 
+T[-1][k][0] = 0   T[-1][k][1] = -inf
+T[i][0][0] = 0    T[i][0][1] = -inf
+
+Best value should be max(T[n][k][0]) for all k
+
+121. Best Time to Buy and Sell  (single transaction)
+k=1, fee=0 so recurrence relation is 
+T[i][1][0] = max(T[i-1][1][0], T[i-1][1][1] + prices[i])
+T[i][1][1] = max(T[i-1][1][1], T[i-1][0][0] - prices[i]) = max(T[i-1][1][1], - prices[i])
+since k is always 1 and T[i] only depends on T[i-1] we can use O(1) space
+Ti0 = max(Ti0, Ti1 + price[i])
+Ti1 = max(Ti1, -price[i])
+
+122. Best Time to Buy and Sell Stock  (any number of transactions)
+k=inf, fee=0 so its irrelevant so equations become
+T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])
+T[i][1] = max(T[i-1][1], T[i-1][0] - prices[i])
+can be done with O(1) space 
+(note: use temp variable since Ti0 and Ti1 depend on previous values)
+
+123. Best Time to Buy and Sell Stock - atmost 2 transactions
+T[i][2][0] = max(T[i-1][2][0], T[i-1][2][1] + prices[i])
+T[i][2][1] = max(T[i-1][2][1], T[i-1][1][0] - prices[i])
+T[i][1][0] = max(T[i-1][1][0], T[i-1][1][1] + prices[i])
+T[i][1][1] = max(T[i-1][1][1], T[i-1][0][0] - prices[i]) = max(T[i-1][1][1], - prices[i])
+
+
+188. Best Time to Buy and Sell Stock - at most k transactions 
+This is the original problem, need O(n*k) array
+  
+
+309. Best Time to Buy and Sell Stock with Cooldown of 1 day
+k=inf, Slightly modify the recurrence relation to allow cooldown when buying
+T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])
+T[i][1] = max(T[i-1][1], T[i-2][0] - prices[i])
+Note: T[i-2] use needs to be 1 behind T[i] so use temp
+
+714. Best Time to Buy and Sell Stock with Transaction Fee
+k=inf
+T[i][0] = max(T[i-1][0], T[i-1][1] + prices[i])
+T[i][1] = max(T[i-1][1], T[i-1][0] - prices[i] - fee)
