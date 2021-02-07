@@ -16,7 +16,7 @@ base cases are
 T[-1][k][0] = 0   T[-1][k][1] = -inf
 T[i][0][0] = 0    T[i][0][1] = -inf
 
-Best value should be max(T[n][k][0]) for all k
+Best value should be T[n][k][0]
 
 121. Best Time to Buy and Sell  (single transaction)
 k=1, fee=0 so recurrence relation is 
@@ -42,7 +42,8 @@ T[i][1][1] = max(T[i-1][1][1], T[i-1][0][0] - prices[i]) = max(T[i-1][1][1], - p
 
 188. Best Time to Buy and Sell Stock - at most k transactions 
 This is the original problem, need O(n*k) array
-  
+However one trick is if k >= n/2 then k is irrelevant since you can buy on half the days and sell half the days so its equivalent to setting k-> inf
+so handle 2 cases seperately
 
 309. Best Time to Buy and Sell Stock with Cooldown of 1 day
 k=inf, Slightly modify the recurrence relation to allow cooldown when buying
