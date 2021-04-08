@@ -1,0 +1,16 @@
+Define the buddy system as a complete binary tree. A node may be 0 or 1
+. Its value is 1, if and only if all of its children have a value of 1.
+1
+/
+1 2
+/ \ /
+1 2 3 4
+/ / \ / \ /
+1 2 3 4 5 6 7 8
+
+Implement the following methods.
+1' clearBit(int offset, int len);
+2' setBit(int offset, int len);
+
+Sol: Its a complete Binary tree so figure out the start and end and go up the tree from the bottom. Note clear only needs to reset
+For setbit we need to keep track of the element outside boundary otherwise its just set
