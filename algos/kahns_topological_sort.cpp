@@ -10,7 +10,6 @@ void kahns(vector<vector<int>> adjList) {
     for (auto n: adjList[i])
       inDeg[n]++;
   }
-  int numVisited = 0;
   vector<int> topoOrder;
   queue<int> q;
   for (int i = 0; i < n; ++i)
@@ -22,13 +21,12 @@ void kahns(vector<vector<int>> adjList) {
   while (!q.empty()) {
     int n = q.front();
     topo.push(n);
-    ++numVisited;
     for (auto c: adjList[n]) {
       if (--inDeg[c] == 0)
         q.push(c);
     }
   }
-  if (numVisited == n)
+  if (topoOrder.size() == n)
     return topoOrder;
   else
     //cannot visit so cycle
